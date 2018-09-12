@@ -11,7 +11,8 @@ class Welcome extends React.Component {
         happiness: 100,
         hunger: 0,
         energy: 100
-      }
+      },
+      endOfGameVisible: false
     }
     this.handleFeedTomagotchi = this.handleFeedTomagotchi.bind(this);
     this.handlePlayWithTomagotchi = this.handlePlayWithTomagotchi.bind(this);
@@ -31,22 +32,21 @@ class Welcome extends React.Component {
 
   tomagotchiDead(){
     clearInterval(this.tomagotchiLives);
+    this.setState({endOfGameVisible: true})
   }
 
   updateTomagotchiHealth(){
     let newTomagotchi = this.state.tomagotchi;
-    newTomagotchi.happiness -= 1;
-    newTomagotchi.hunger += 1;
-    newTomagotchi.energy -= 1;
+    newTomagotchi.happiness -= 10;
+    newTomagotchi.hunger += 10;
+    newTomagotchi.energy -= 10;
     this.isTomagothciDead();
     this.setState({tomagotchi: newTomagotchi})
   }
 
   isTomagothciDead(){
-    let showEndOfGame = null;
     if (this.state.tomagotchi.happiness <= 0 || this.state.tomagotchi.energy <= 0 || this.state.tomagotchi.hunger >= 100){
       this.tomagotchiDead();
-      showEndOfGame = <EndOfGame />
     }
   }
 
@@ -75,9 +75,15 @@ class Welcome extends React.Component {
   }
 
   render(){
+    let showEndOfGame = null;
+    if(this.state.endOfGameVisible){
+      showEndOfGame = <EndOfGame />
+    }
+
     return(
       <div>
         <Controls onFeedTomagotchi={this.handleFeedTomagotchi} onPlayWithTomagotchi={this.handlePlayWithTomagotchi} onPutTomagotchiToSleep={this.handlePutTomagotchiToSleep}/>
+        {showEndOfGame}
       </div>
     );
   }
