@@ -1,6 +1,7 @@
 import React from 'react';
 import EndOfGame from './EndOfGame';
-import Controls from './Controls'
+import Controls from './Controls';
+import Health from './Health';
 
 class Welcome extends React.Component {
 
@@ -82,6 +83,7 @@ class Welcome extends React.Component {
 
     return(
       <div>
+        <Health tomagotchi={this.state.tomagotchi}/>
         <Controls onFeedTomagotchi={this.handleFeedTomagotchi} onPlayWithTomagotchi={this.handlePlayWithTomagotchi} onPutTomagotchiToSleep={this.handlePutTomagotchiToSleep}/>
         {showEndOfGame}
       </div>
